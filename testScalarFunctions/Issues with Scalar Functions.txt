@@ -1,0 +1,11 @@
+1) [dbo].[getAcidStd] - has an explicit call to [PLASMATRAX] database. causes issues when DB name is not [PLASMATRAX]
+2) DEPRECATED --> [dbo].[getAnalysisStd] - defines sequenceId variable as VARCHAR(12)... this is an issue because sequenceId's are always VARCHAR(36) so the scalar function never returns anything. Also has 0 dependencies.. deprecated?
+3) [dbo].[getAnalyte] - Always returns the same value. (Zr). No matter the input Analysis. Skipping this one for now
+4) [dbo].[getBatchFile] - has an explicit call to [PLASMATRAX] database. causes issues when DB name is not [PLASMATRAX]
+5) [dbo].[getCal] - has an explicit call to [PLASMATRAX] database. causes issues when DB name is not [PLASMATRAX]
+6) [dbo].[getCalId] - seems like it is deprecated? also allows to be called when sampletype is '' (empty) and does some weird stuff with selecting discover data and calibration data... doesnt seem correct. 
+7) [dbo].[getCalStdVal] - cannot run the equality test because the scalar function contains dynamic SQL. 
+8) [dbo].[getCalType] - deprecated. Not used.
+9) [dbo].[getDisplayName] - has an explicit call to [PLASMATRAX] database. causes issues when DB name is not [PLASMATRAX]. 
+10)[dbo].[getFastMethod_S5] returns VARCHAR(40) whereas all other fast method returns return VARCHAR(50). 
+11) [dbo].[getHostName] has an explicit call to [PLASMATRAX] database. causes issues when DB name is not [PLASMATRAX].
