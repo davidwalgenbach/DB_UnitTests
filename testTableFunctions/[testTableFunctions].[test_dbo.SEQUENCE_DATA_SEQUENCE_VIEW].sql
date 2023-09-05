@@ -1,47 +1,45 @@
-ALTER PROCEDURE testTableFunctions.[test_dbo.SEQUENCE_DATA_QCReference]
+ALTER PROCEDURE testTableFunctions.[test_dbo.SEQUENCE_DATA_SEQUENCE_VIEW]
 AS
 BEGIN
 	IF OBJECT_ID('expected') IS NOT NULL DROP TABLE expected;
 	IF OBJECT_ID('actual') IS NOT NULL DROP TABLE actual;
 
 	DECLARE @analysis	VARCHAR(12);	SET @analysis = 'analysisID';
-	DECLARE @analysisStd	VARCHAR(12);	SET @analysisStd = '';
-	DECLARE @sequenceId		VARCHAR(36);	SET @sequenceId = 'imasequenceID';
-	DECLARE @index			VARCHAR(12);	SET @index = '3';
-	DECLARE @qcid			INT;			SET @qcid = 1;
+	DECLARE @sequenceId	VARCHAR(36);	SET @sequenceId = 'imasequenceID';
 
-	CREATE TABLE expected ([Analyte] VARCHAR(10)
-	,[Mass] VARCHAR(3)
-	,[Mode] VARCHAR(10)
-	,[QCId] INT
-	,[TopRowMeanValue] VARCHAR(24)
-	,[Std0MeanValue] VARCHAR(24)
-	,[BEC] VARCHAR(24)
-	,[CalPointConcentration] VARCHAR(24)
-	,[QCConcentration] VARCHAR(20));
+	CREATE TABLE expected ([Id] INT
+		,[Status] TINYINT
+		,[Validate] TINYINT
+		,[RowType] VARCHAR(20) 
+		,[Description] VARCHAR(50) 
+		,[Index] INT 
+		,[SequenceId] VARCHAR(36)
+		,[TraxId] VARCHAR(20)
+		,[Rack] VARCHAR(2)
+		,[Vial] VARCHAR(2) 
+		,[SampleType] VARCHAR(50) 
+		,[CalType] VARCHAR(20) 
+		,[Calibration] VARCHAR(50) 
+		,[FastMethod] VARCHAR(50) 
+		,[FastDF] VARCHAR(10)
+		,[DateTime] VARCHAR(20));
 
-	CREATE TABLE actual ([Analyte] VARCHAR(10)
-	,[Mass] VARCHAR(3)
-	,[Mode] VARCHAR(10)
-	,[QCId] INT
-	,[TopRowMeanValue] VARCHAR(24)
-	,[Std0MeanValue] VARCHAR(24)
-	,[BEC] VARCHAR(24)
-	,[CalPointConcentration] VARCHAR(24)
-	,[QCConcentration] VARCHAR(20));
-
-	EXEC tSQLt.FakeTable 'dbo', 'SEQUENCE_VERSIONS';
-	INSERT INTO [dbo].[SEQUENCE_VERSIONS] ([Id]
-      ,[UserDevice]
-      ,[Analysis]
-      ,[SequenceId]
-      ,[VersionId]
-      ,[DateTime]) VALUES (1
-	  ,'0303'
-	  ,'analysisID'
-	  ,'imasequenceID'
-	  ,'imaversionID'
-	  ,'08/30/2023 15:49:03');
+	CREATE TABLE actual ([Id] INT
+		,[Status] TINYINT
+		,[Validate] TINYINT
+		,[RowType] VARCHAR(20) 
+		,[Description] VARCHAR(50) 
+		,[Index] INT 
+		,[SequenceId] VARCHAR(36)
+		,[TraxId] VARCHAR(20)
+		,[Rack] VARCHAR(2)
+		,[Vial] VARCHAR(2) 
+		,[SampleType] VARCHAR(50) 
+		,[CalType] VARCHAR(20) 
+		,[Calibration] VARCHAR(50) 
+		,[FastMethod] VARCHAR(50) 
+		,[FastDF] VARCHAR(10)
+		,[DateTime] VARCHAR(20));
 
 	EXEC tSQLt.FakeTable 'dbo', 'SEQUENCE_DATA';
 	INSERT INTO [dbo].[SEQUENCE_DATA] ([Id]
@@ -103,7 +101,7 @@ BEGIN
 	  ,''
 	  ,1
 	  ,'imasequenceID'
-	  ,'08/30/2023 15:51:44'
+	  ,'08/31/2023 11:26:34'
 	  ,'Std-0'
 	  ,'CalBlank'
 	  ,'0101'
@@ -196,7 +194,7 @@ BEGIN
 	  ,''
 	  ,2
 	  ,'imasequenceID'
-	  ,'08/30/2023 15:59:44'
+	  ,'08/31/2023 11:34:34'
 	  ,'Std-1'
 	  ,'CalStandard'
 	  ,'0101'
@@ -221,15 +219,15 @@ BEGIN
 	  ,'Li'
 	  ,'7'
 	  ,'Hot'
+	  ,'45'
+	  ,'50'
 	  ,'55'
 	  ,'50'
-	  ,'60'
-	  ,'55'
-	  ,'12'
-	  ,'1.5423'
-	  ,'1.1'
-	  ,'3.5'
-	  ,'0.9657');
+	  ,'13.21'
+	  ,'0.75342'
+	  ,'1.1231'
+	  ,'0.589'
+	  ,'0.56473');
 	INSERT INTO [dbo].[SEQUENCE_DATA] ([Id]
       ,[UserDevice]
       ,[User]
@@ -289,7 +287,7 @@ BEGIN
 	  ,''
 	  ,3
 	  ,'imasequenceID'
-	  ,'08/30/2023 15:59:44'
+	  ,'08/31/2023 11:34:34'
 	  ,'Std-2'
 	  ,'CalStandard'
 	  ,'0101'
@@ -314,15 +312,15 @@ BEGIN
 	  ,'Li'
 	  ,'7'
 	  ,'Hot'
-	  ,'200'
-	  ,'220'
-	  ,'210'
-	  ,'210'
-	  ,'5.42'
-	  ,'5.423'
-	  ,'2.1'
-	  ,'12.2'
-	  ,'0.97542');
+	  ,'123'
+	  ,'129'
+	  ,'126'
+	  ,'126'
+	  ,'9.54'
+	  ,'2.12314'
+	  ,'1.241'
+	  ,'1.454'
+	  ,'0.7685');
 	INSERT INTO [dbo].[SEQUENCE_DATA] ([Id]
       ,[UserDevice]
       ,[User]
@@ -382,7 +380,7 @@ BEGIN
 	  ,''
 	  ,4
 	  ,'imasequenceID'
-	  ,'08/30/2023 15:59:44'
+	  ,'08/31/2023 11:42:34'
 	  ,'Std-3'
 	  ,'CalStandard'
 	  ,'0101'
@@ -407,15 +405,15 @@ BEGIN
 	  ,'Li'
 	  ,'7'
 	  ,'Hot'
-	  ,'505'
-	  ,'515'
-	  ,'510'
-	  ,'510'
-	  ,'14.231'
-	  ,'25.667'
-	  ,'12.23'
-	  ,'32.34'
-	  ,'0.98967');
+	  ,'255'
+	  ,'250'
+	  ,'245'
+	  ,'250'
+	  ,'15.523'
+	  ,'5'
+	  ,'3.5'
+	  ,'2.1241'
+	  ,'0.8537');
 	INSERT INTO [dbo].[SEQUENCE_DATA] ([Id]
       ,[UserDevice]
       ,[User]
@@ -475,7 +473,7 @@ BEGIN
 	  ,''
 	  ,5
 	  ,'imasequenceID'
-	  ,'08/30/2023 15:59:44'
+	  ,'08/31/2023 11:42:34'
 	  ,'0101'
 	  ,'Sample'
 	  ,'0101'
@@ -501,402 +499,141 @@ BEGIN
 	  ,'7'
 	  ,'Hot'
 	  ,'12'
-	  ,'16'
-	  ,'14'
-	  ,'14'
-	  ,'0.00231'
-	  ,'0.875'
-	  ,'2.223'
-	  ,'32.321'
-	  ,'0.99376');
-
-	EXEC tSQLt.FakeTable 'dbo', 'SEQUENCE_QC';
-	INSERT INTO [dbo].[SEQUENCE_QC] ([Id]
-      ,[VersionId]
-      ,[ProtocolId]
-      ,[QCId]
-      ,[QCName]
-      ,[QCTypeId]
-      ,[QCType]
-      ,[LimitType]
-      ,[Priority]
-      ,[CalId]
-      ,[WashEnabled]
-      ,[WashMethod]
-      ,[QCTraxId]
-      ,[StockId]
-      ,[Frequency]
-      ,[Point]
-      ,[Enabled]) VALUES (1
-	  ,'imaversionID'
-	  ,1
-	  ,1
-	  ,'TestingQC'
-	  ,0
-	  ,'Continuous'
-	  ,'RSD'
-	  ,1
-	  ,1
-	  ,0
-	  ,''
-	  ,''
-	  ,0
-	  ,0
-	  ,0
-	  ,1);
-
-	EXEC tSQLt.FakeTable 'dbo', 'SEQUENCE_CalDATA';
-	INSERT INTO [dbo].[SEQUENCE_CalDATA] ([Id]
-      ,[VersionId]
-      ,[CalId]
-      ,[Calibration]
-      ,[ProtocolId]
-      ,[Analyte]
-      ,[Mass]
-      ,[Mode]
-      ,[LineFit]
-      ,[InterceptFitType]
-      ,[Forcing]
-      ,[InternalStd]
-      ,[GroupId]
-      ,[StdId]
-      ,[Stock]
-      ,[Unit]
-      ,[Std-0]
-      ,[Std-1]
-      ,[Std-2]
-      ,[Std-3]
-      ,[Std-4]
-      ,[Std-5]
-      ,[Std-6]
-      ,[Std-7]
-      ,[Std-8]
-      ,[Std-9]) VALUES (1
-	  ,'imaversionID'
-	  ,1
-	  ,'Testing_Cal'
-	  ,1
-	  ,'Li'
-	  ,'7'
-	  ,'Hot'
-	  ,'None'
-	  ,'None'
-	  ,'None'
-	  ,''
-	  ,0
-	  ,1
-	  ,'1000'
-	  ,'ppt'
+	  ,'15'
+	  ,'18'
+	  ,'15'
+	  ,'21.23'
+	  ,'0.4213'
 	  ,'0'
-	  ,''
-	  ,''
-	  ,''
-	  ,''
-	  ,''
-	  ,''
-	  ,''
-	  ,''
-	  ,'');
-	INSERT INTO [dbo].[SEQUENCE_CalDATA] ([Id]
-      ,[VersionId]
-      ,[CalId]
-      ,[Calibration]
-      ,[ProtocolId]
-      ,[Analyte]
-      ,[Mass]
-      ,[Mode]
-      ,[LineFit]
-      ,[InterceptFitType]
-      ,[Forcing]
-      ,[InternalStd]
-      ,[GroupId]
-      ,[StdId]
-      ,[Stock]
-      ,[Unit]
-      ,[Std-0]
-      ,[Std-1]
-      ,[Std-2]
-      ,[Std-3]
-      ,[Std-4]
-      ,[Std-5]
-      ,[Std-6]
-      ,[Std-7]
-      ,[Std-8]
-      ,[Std-9]) VALUES (2
-	  ,'imaversionID'
-	  ,1
-	  ,'Testing_Cal'
-	  ,1
-	  ,'Li'
-	  ,'7'
-	  ,'Hot'
-	  ,'None'
-	  ,'None'
-	  ,'None'
-	  ,''
-	  ,1
-	  ,1
-	  ,'1000'
-	  ,'ppt'
-	  ,''
-	  ,'1.5'
-	  ,'5'
-	  ,'25'
-	  ,''
-	  ,''
-	  ,''
-	  ,''
-	  ,''
-	  ,'');
+	  ,'0'
+	  ,'12.525');
 
-	EXEC tSQLt.FakeTable 'dbo', 'SolutionDATA';
-	INSERT INTO [dbo].[SolutionDATA] ([Id]
-      ,[Name]
-      ,[TypeId]
-      ,[Type]
-      ,[Description]
-      ,[Part]
-      ,[Matrix]
-      ,[Acid]
-      ,[TraxID]
-      ,[Unit]
-      ,[FastMethod]
-      ,[H]
-      ,[He]
-      ,[Li]
-      ,[Be]
-      ,[B]
-      ,[C]
-      ,[N]
-      ,[O]
-      ,[F]
-      ,[Ne]
-      ,[Na]
-      ,[Mg]
-      ,[Al]
-      ,[Si]
-      ,[P]
-      ,[S]
-      ,[Cl]
-      ,[K]
-      ,[Ar]
-      ,[Ca]
-      ,[Sc]
-      ,[Ti]
-      ,[V]
-      ,[Cr]
-      ,[Mn]
-      ,[Fe]
-      ,[Co]
-      ,[Ni]
-      ,[Cu]
-      ,[Zn]
-      ,[Ga]
-      ,[Ge]
-      ,[As]
-      ,[Se]
-      ,[Br]
-      ,[Kr]
-      ,[Rb]
-      ,[Sr]
-      ,[Y]
-      ,[Zr]
-      ,[Nb]
-      ,[Tc]
-      ,[Mo]
-      ,[Ru]
-      ,[Rh]
-      ,[Pd]
-      ,[Ag]
-      ,[Cd]
-      ,[In]
-      ,[Sn]
-      ,[Sb]
-      ,[Te]
-      ,[I]
-      ,[Xe]
-      ,[Cs]
-      ,[Ba]
-      ,[La]
-      ,[Ce]
-      ,[Pr]
-      ,[Pm]
-      ,[Nd]
-      ,[Sm]
-      ,[Eu]
-      ,[Gd]
-      ,[Tb]
-      ,[Dy]
-      ,[Ho]
-      ,[Er]
-      ,[Tm]
-      ,[Yb]
-      ,[Lu]
-      ,[Hf]
-      ,[Ta]
-      ,[W]
-      ,[Re]
-      ,[Os]
-      ,[Ir]
-      ,[Pt]
-      ,[Au]
-      ,[Hg]
-      ,[Tl]
-      ,[Pb]
-      ,[Bi]
-      ,[At]
-      ,[Po]
-      ,[Rn]
-      ,[Fr]
-      ,[Ra]
-      ,[Ac]
-      ,[Pa]
-      ,[Th]
-      ,[Np]
-      ,[U]
-      ,[Pu]
-      ,[Am]
-      ,[Cm]
-      ,[Bk]
-      ,[Cf]
-      ,[Es]
-      ,[Fm]
-      ,[Md]
-      ,[No]
-      ,[Lr]) VALUES (1
-	  ,'Testing_Sol'
-	  ,0
-	  ,'Calibration'
-	  ,''
-	  ,''
-	  ,''
-	  ,1
-	  ,''
-	  ,''
-	  ,''
-	  ,''
-	  ,'1000'
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-      ,''
-	  ,'');
+	INSERT INTO actual SELECT * FROM [dbo].[SEQUENCE_DATA_SEQUENCE_VIEW](@analysis, @sequenceId);
 
-	INSERT INTO actual SELECT * FROM [dbo].[SEQUENCE_DATA_QCReference](@analysis, @analysisStd, @sequenceId, @index, @qcid);
-
-	INSERT INTO expected ([Analyte] 
-	,[Mass] 
-	,[Mode] 
-	,[QCId] 
-	,[TopRowMeanValue] 
-	,[Std0MeanValue] 
-	,[BEC] 
-	,[CalPointConcentration] 
-	,[QCConcentration]) VALUES ('Li'
-	,'7'
-	,'Hot'
-	,1
-	,0
-	,0
-	,0
-	,''
-	,'');
+	INSERT INTO expected ([Id] 
+		,[Status] 
+		,[Validate] 
+		,[RowType] 
+		,[Description] 
+		,[Index] 
+		,[SequenceId] 
+		,[TraxId] 
+		,[Rack] 
+		,[Vial] 
+		,[SampleType]  
+		,[CalType] 
+		,[Calibration] 
+		,[FastMethod] 
+		,[FastDF] 
+		,[DateTime]) VALUES (2
+		,1
+		,0
+		,'Standard'
+		,'Std-1'
+		,2
+		,'imasequenceID'
+		,'0101'
+		,'R'
+		,'2'
+		,'Testing'
+		,'EXTERNAL'
+		,'Testing_Cal'
+		,'S5_VL_D1.fast'
+		,1
+		,'08/31/2023 11:34:34');
+	INSERT INTO expected ([Id] 
+		,[Status] 
+		,[Validate] 
+		,[RowType] 
+		,[Description] 
+		,[Index] 
+		,[SequenceId] 
+		,[TraxId] 
+		,[Rack] 
+		,[Vial] 
+		,[SampleType]  
+		,[CalType] 
+		,[Calibration] 
+		,[FastMethod] 
+		,[FastDF] 
+		,[DateTime]) VALUES (3
+		,1
+		,0
+		,'Standard'
+		,'Std-2'
+		,3
+		,'imasequenceID'
+		,'0101'
+		,'R'
+		,'2'
+		,'Testing'
+		,'EXTERNAL'
+		,'Testing_Cal'
+		,'S5_VL_D1.fast'
+		,1
+		,'08/31/2023 11:34:34');
+	INSERT INTO expected ([Id] 
+		,[Status] 
+		,[Validate] 
+		,[RowType] 
+		,[Description] 
+		,[Index] 
+		,[SequenceId] 
+		,[TraxId] 
+		,[Rack] 
+		,[Vial] 
+		,[SampleType]  
+		,[CalType] 
+		,[Calibration] 
+		,[FastMethod] 
+		,[FastDF] 
+		,[DateTime]) VALUES (4
+		,1
+		,0
+		,'Standard'
+		,'Std-3'
+		,4
+		,'imasequenceID'
+		,'0101'
+		,'R'
+		,'2'
+		,'Testing'
+		,'EXTERNAL'
+		,'Testing_Cal'
+		,'S5_VL_D1.fast'
+		,1
+		,'08/31/2023 11:42:34');
+	INSERT INTO expected ([Id] 
+		,[Status] 
+		,[Validate] 
+		,[RowType] 
+		,[Description] 
+		,[Index] 
+		,[SequenceId] 
+		,[TraxId] 
+		,[Rack] 
+		,[Vial] 
+		,[SampleType]  
+		,[CalType] 
+		,[Calibration] 
+		,[FastMethod] 
+		,[FastDF] 
+		,[DateTime]) VALUES (5
+		,1
+		,0
+		,'Sample'
+		,'0101'
+		,5
+		,'imasequenceID'
+		,'0101'
+		,'1'
+		,'1'
+		,'Testing'
+		,'EXTERNAL'
+		,'Testing_Cal'
+		,'S5_VL_D1.fast'
+		,1
+		,'08/31/2023 11:42:34');
 
 	EXEC tSQLt.AssertEqualsTable 'expected', 'actual';
 END;
